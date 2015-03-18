@@ -1,1 +1,53 @@
-tests for all
+- tests for real-package
+- tests for complex-package
+- tests for rational-package
+- tests for calculus-package object
+- tests for algebra-package object
+- calculus.elementary Operations: implement Reduction
+- tests for calculus.elementary package
+- fully implement different matrixes
+- tests for polynomial
+- geometry
+    - plane
+        - Point
+        - Vector
+        - Line
+        - Triangle
+        - Segment
+        - Circle
+        - Ellipsis
+        - Rectangle
+
+        Operations
+        - Cut
+        - Union
+    - space (3 dim)
+        - Point
+        - Vector
+        - Line
+        - Segment
+        - Triangle
+        - Plane
+        - Sphere
+        - Cube (general)
+        - Cylinder
+        - Cone
+        - Ellipsoid
+
+    - space (n dim)
+        - Point
+        - Vector
+        - Segment
+        - Plane
+        - N-Plane (???)
+        - N-Sphere
+        - N-Cube
+
+- tests for 2d geometry
+- tests for 3d geometry
+- tests for nd geometry
+- remake parser (2. prior.)
+- symbolic derivation (2. prior.)
+- implement quaternions
+- implement graphs
+    - implement any amount of graph algorithms (3. prior. (??))
