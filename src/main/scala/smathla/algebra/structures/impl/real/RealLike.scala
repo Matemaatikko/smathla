@@ -1,8 +1,8 @@
-package smathla.algebra.concrete_structures.real
+package smathla.algebra.structures.impl.real
 
-import smathla.algebra.concrete_structures.Real64.Real64
 import smathla.algebra.definitions.TotallyOrderable
 import smathla.algebra.structures.FieldElem
+import smathla.algebra.structures.impl.real.Real64
 
 import scala.reflect.ClassTag
 

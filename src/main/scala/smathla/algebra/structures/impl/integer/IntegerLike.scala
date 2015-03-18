@@ -1,4 +1,4 @@
-package smathla.algebra.concrete_structures.integer
+package smathla.algebra.structures.impl.integer
 
 import smathla.algebra.definitions.TotallyOrderable
 import smathla.algebra.structures.{EuclideanElem}

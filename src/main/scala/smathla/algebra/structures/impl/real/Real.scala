@@ -1,4 +1,4 @@
-package smathla.algebra.concrete_structures.real
+package smathla.algebra.structures.impl.real
 
 import smathla.algebra.definitions.{Equal, Higher, Lower}
 import smathla.algebra.structures.{Euclidean}

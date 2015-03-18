@@ -1,7 +1,7 @@
-package smathla.algebra.concrete_structures.Real64
+package smathla.algebra.structures.impl.real
 
-import smathla.algebra.concrete_structures.real.RealLike
 import smathla.algebra.definitions.{Equal, Higher, Lower}
+import smathla.algebra.structures.impl.real.RealLike
 import smathla.algebra.structures.{Euclidean}
 
 case class Real64(private val i: Double) extends RealLike[Real64]{

@@ -1,7 +1,7 @@
-package smathla.algebra.concrete_structures.complex
+package smathla.algebra.structures.impl.complex
 
 import smathla.Types.{Gaussian64, Gaussian}
-import smathla.algebra.concrete_structures.integer.{Integer64, IntegerLike, Integer}
+import smathla.algebra.structures.impl.integer.{Integer, IntegerLike, Integer64}
 import smathla.algebra.structures.{Euclidean, EuclideanElem}
 
 

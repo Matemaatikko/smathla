@@ -1,7 +1,8 @@
-package smathla.algebra.concrete_structures.rational
+package smathla.algebra.structures.impl.rational
 
 import smathla.Types._
-import smathla.algebra.concrete_structures.integer.{Integer64, IntegerLike, Integer}
+import smathla.algebra.structures.impl.integer
+import smathla.algebra.structures.impl.integer.{IntegerLike, Integer64}
 import smathla.algebra.structures.{Field, FieldElem}
 
 
@@ -23,10 +24,10 @@ case class RationalLike[A <: IntegerLike[A]](val numerator: A, val denominator: 
 
 object Rational extends Field[Rational] {
 
-  def zero = new Rational(Integer.zero, Integer.unit)
-  def unit = new Rational(Integer.unit, Integer.unit)
-  def apply(numerator: Integer, denominator: Integer) = new Rational(numerator, denominator)
-  def apply(numerator: Integer) = new Rational(numerator, Integer.unit)
+  def zero = new Rational(integer.Integer.zero, integer.Integer.unit)
+  def unit = new Rational(integer.Integer.unit, integer.Integer.unit)
+  def apply(numerator: integer.Integer, denominator: integer.Integer) = new Rational(numerator, denominator)
+  def apply(numerator: integer.Integer) = new Rational(numerator, integer.Integer.unit)
   def unapply(that: Rational) = Some(that.numerator, that.denominator)
 }
 

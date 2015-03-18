@@ -1,5 +1,8 @@
-package smathla.algebra.concrete_structures
+package smathla.algebra.structures.impl
 
+import java.lang
+
+import smathla.algebra.structures.impl.integer
 import smathla.algebra.structures.{RingElem}
 import integer.Integer
 
@@ -27,7 +30,7 @@ case class Polynomial[E <: RingElem[E]] private(val map: Map[Integer, E]) extend
   override def unary_- = Polynomial(map.map(a => (a._1, -a._2)))
 
   override def toString() = map.foldLeft(z = "")((z, a) => if (z == "") a._2 + "x^" + a._1 else a._2 + "x^" + a._1 + "+" + z)
-  override def isZero = (map.size == 1 && map.isDefinedAt(Integer.zero) && map(Integer.zero).isZero) || map.size == 0
+  override def isZero = (map.size == 1 && map.isDefinedAt(integer.Integer.zero) && map(integer.Integer.zero).isZero) || map.size == 0
 
-  override def isUnit = map.size == 1 && map.isDefinedAt(Integer.zero) && map(Integer.zero).isUnit
+  override def isUnit = map.size == 1 && map.isDefinedAt(integer.Integer.zero) && map(integer.Integer.zero).isUnit
 }

@@ -1,7 +1,6 @@
 package smathla
 
-import smathla.algebra.concrete_structures.Real64.Real64
-import smathla.algebra.concrete_structures.real.{Real, RealLike}
+import smathla.algebra.structures.impl.real.{Real, RealLike, Real64}
 
 package object calculus {
 

@@ -1,7 +1,5 @@
 package smathla.algebra.structures
 
-import smathla.algebra.concrete_structures.integer.{IntegerLike, Integer}
-
 /**
  * This class identifies element of algebraic structure that is called Euclidean domain.
  * Euclidean domain S has following properties:

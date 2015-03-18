@@ -1,5 +1,5 @@
 
-package smathla.algebra.concrete_structures.matrix
+package smathla.algebra.structures.impl.matrix
 
 import smathla.algebra.structures.RingElem
 import smathla.utils.Table

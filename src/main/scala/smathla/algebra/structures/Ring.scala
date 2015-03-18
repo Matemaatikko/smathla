@@ -1,7 +1,6 @@
 package smathla.algebra.structures
 
 import smathla.Types._
-import smathla.algebra.concrete_structures.integer.{IntegerLike, Integer}
 
 /**
  * This class identifies element of algebraic structure that is called Ring.

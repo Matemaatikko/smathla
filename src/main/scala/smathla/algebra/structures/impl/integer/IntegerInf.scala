@@ -1,4 +1,4 @@
-package smathla.algebra.concrete_structures.integer
+package smathla.algebra.structures.impl.integer
 
 import smathla.algebra.definitions.{Equal, Higher, Lower}
 import smathla.algebra.structures.{Euclidean}
@@ -15,7 +15,6 @@ case class IntegerInf(private val i: BigInt) extends IntegerLike[IntegerInf] {
 
   def %(a: IntegerInf) = new IntegerInf(this.i % a.i)
   def /(a: IntegerInf) = new IntegerInf(this.i / a.i)
-
 
   override def toString() = i.toString
 

@@ -1,7 +1,7 @@
-package smathla.algebra.concrete_structures.integer
+package smathla.algebra.structures.impl.integer
 
-import smathla.algebra.concrete_structures.real.Real
 import smathla.algebra.definitions.{Equal, Higher, Lower}
+import smathla.algebra.structures.impl.real.Real
 import smathla.algebra.structures.{Euclidean}
 
 case class Integer(private val i: Int) extends IntegerLike[Integer] {

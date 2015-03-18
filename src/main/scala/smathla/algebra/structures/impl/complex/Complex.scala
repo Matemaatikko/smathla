@@ -1,8 +1,7 @@
-package smathla.algebra.concrete_structures.complex
+package smathla.algebra.structures.impl.complex
 
 import smathla.Types.{Complex64, Complex}
-import smathla.algebra.concrete_structures.Real64.Real64
-import smathla.algebra.concrete_structures.real.{RealLike, Real}
+import smathla.algebra.structures.impl.real.{Real64, RealLike, Real}
 import smathla.algebra.structures.{Field, FieldElem}
 import smathla.calculus
 
