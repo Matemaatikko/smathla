@@ -3,24 +3,28 @@ package smathla.calculus.elementary
 import smathla.algebra.concrete_structures.real.RealLike
 import smathla.calculus
 
-trait Evaluation[A <: RealLike[A]]{
-  def fold(a: Evaluation[A], op: (A, A) => A): Evaluation[A]
-  def map[B](f: A => B): Value[B]
-}
-case object NonValue extends Evaluation[Nothing]{
-  def fold(a: Evaluation[Nothing], op: (Nothing, Nothing) => Nothing) = NonValue
-  def map[B](f: Nothing => B): Value[B] = NonValue[B]
-}
-case class Value[A <: RealLike[A]](value: A) extends Evaluation[A]{
-  def fold(a: Evaluation[A], op: (A, A) => A): Evaluation[A] = a match {
-    case NonValue => NonValue[A]
-    case Value(value2) => Value(op(value, value2))
+import scala.reflect.ClassTag
+
+sealed abstract class Evaluation[+A]{
+  final def fold[B >: A](a: Evaluation[B], op: (B, B) => B): Evaluation[B] =
+    if(this == NonValue) NonValue
+    else {
+      val value = a.asInstanceOf[Value[B]].value
+      a match {
+        case Value(value2) => Value(op(value, value2))
+        case _ => NonValue
+      }
+    }
+  final def map[B](f: A => B): Evaluation[B] = this match{
+    case Value(value) => Value[B](f(value))
+    case NonValue => NonValue
   }
-  def map[B](f: A => B): Value[B] = Value[B](f(value))
 }
+case object NonValue extends Evaluation[Nothing]
+final case class Value[A](value: A) extends Evaluation[A]
 
 case object Derivation{
-  def derive[A <: RealLike[A]](function: ElementaryModifierLike[A])(implicit variable: Variable[A]): ElementaryModifierLike[A] = function match {
+  def derive[A <: RealLike[A]: ClassTag](function: ElementaryModifierLike[A])(implicit variable: Variable[A]): ElementaryModifierLike[A] = function match {
     case Multiplication(fst, snd) => derive(fst) * snd + fst * derive(snd)
     case Division(fst, snd) => (derive(fst) * snd - fst * derive(snd)) / (snd * snd)
     case Addition(fst, snd) => derive(fst) +  derive(snd)
@@ -28,7 +32,7 @@ case object Derivation{
     case Power(base, to) => (base ^ to) * (to / base + derive(to) * Log(base))
     case a: Variable[A] if a == variable => new Constant[A](RealLike.unit[A])
     case a: Variable[A] if a != variable => new Constant[A](RealLike.zero[A])
-    case _: Constant => new Constant[A](RealLike.zero[A])
+    case _: Constant[A] => new Constant[A](RealLike.zero[A])
 
     case Sin(f) => Cos(f) * derive(f)
     case Cos(f) => new Constant[A](-RealLike.unit[A]) * Sin[A](f) * derive(f)
@@ -45,7 +49,7 @@ case object Evaluation{
     case Addition(fst, snd) => evaluate(fst).fold(evaluate(snd), _+_)
     case Subtraction(fst, snd) => evaluate(fst).fold(evaluate(snd), _-_)
     case Power(base, to) => evaluate(base).fold(evaluate(to), calculus.pow(_, _))
-    case a: Variable[A]  => NonValue[A]
+    case a: Variable[A]  => NonValue
     case Constant(c) => Value(c)
 
     case Sin(f) => evaluate(f).map(calculus.sin(_))
@@ -73,4 +77,8 @@ case object Substitution{
     case Exp(f) => Exp(substitute(f))
     case Log(f) => Log(substitute(f))
   }
+}
+
+case object Reduction{ //TODO reduction
+  def reduce[A <: RealLike[A]](function: ElementaryModifierLike[A]): ElementaryModifierLike[A] = ???
 }

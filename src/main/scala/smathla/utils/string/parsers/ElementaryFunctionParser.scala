@@ -1,7 +1,6 @@
 package smathla.utils.string.parsers
 
-import Math.Calculus._
-import smathla.Types.ElementaryFunction
+import smathla.Types.ElementaryModifier
 import smathla.calculus.elementary._
 import smathla.utils.{Token, Lexer}
 
@@ -13,31 +12,19 @@ import scala.collection.mutable.Buffer
  * This object uses parse-method to parse Function from given string.
  * Note: When writing functions, brachet's are needed to mark inner function.
  */
-object ElementaryFunctionParser{
-
-  def main(args: Array[String]) {
-    val list = List("sin(x)", "cos(x)", "tan(x)", "exp(x)", "log(x)", "x^2", "-x", "-3.24-x^x", "5x^x-3x^2+2x-1")
-    for (a <- list) {
-      val f = parse(a)
-      println("String: " + a)
-      println("Function: " + f.toString)
-      println("Derivate: " + f.derive)
-      println("Reduced derivate: " + (f.derive))
-      println("\n")
-    }
-  }
+object ElementaryModifierParser{
 
   /**
    * This method first create Lexer to split given string to Token-array.
    * And then calls another parse-method to generate tree from array.
    * Parsed tree is returned.
    */
-  def parse(input: String): ElementaryFunction = {
+  def parse(input: String): ElementaryModifier = {
     val lexer = new Lexer(input.toList)
     lexer.run
     val list: Buffer[Token] = lexer.getTokens
     check(list)
-    return parse(list.asInstanceOf[Buffer[Any]])
+    return ??? //parse(list.asInstanceOf[Buffer[Any]])
   }
 
   /**
@@ -102,14 +89,14 @@ object ElementaryFunctionParser{
   /**
    * Method adds new function definition to variable maps.
    */
-  def add(a: String, b: ((ElementaryFunction) => ElementaryFunction)) {
+  def add(a: String, b: ((ElementaryModifier) => ElementaryModifier)) {
     maps = maps + ((a, b))
   }
 
   /**
    * Maps function names to functions.
    */
-  private var maps = Map[String, (ElementaryFunction) => ElementaryFunction](
+  private var maps = Map[String, (ElementaryModifier) => ElementaryModifier](
     "sin" -> (in => new Sin(in)),
     "cos" -> (in => new Cos(in)),
     "tan" -> (in => new Tan(in)),
@@ -120,7 +107,7 @@ object ElementaryFunctionParser{
   /**
    * Returns function which inner function is [in] and it's name match with [token].
    */
-  private def map(token: String, in: ElementaryFunction): ElementaryFunction = {
+  private def map(token: String, in: ElementaryModifier): ElementaryModifier = {
     if (maps.contains(token)) return maps(token).apply(in)
     else return null
   }
@@ -143,7 +130,7 @@ object ElementaryFunctionParser{
    * 9. +
    * 10.-
    */
-  private def parse(buffer: Buffer[Any]): ElementaryFunction = {
+ /* private def parse(buffer: Buffer[Any]): ElementaryModifier = {
     while (next(buffer, 0) != -1) {
       // This part of code removes brachet's from array, parsing inner parts of brachet's.
       val begin = next(buffer, -1)
@@ -175,20 +162,20 @@ object ElementaryFunctionParser{
           buffer(pos) = new Variable(token.value.charAt(0))
         }
         case Token(Token.Word) => {
-          var cat: ElementaryFunction = null
+          var cat: ElementaryModifier = null
           //Note here that parser fails in condition function1 unary_minus something. That means that brachet's are needed to mark inner function.
-          val in: ElementaryFunction = buffer(pos + 1).asInstanceOf[ElementaryFunction]
+          val in: ElementaryModifier = buffer(pos + 1).asInstanceOf[ElementaryModifier]
           cat = map(token.value, in)
           buffer(pos) = cat
           buffer.remove(pos + 1, 1) //Removes inner function..
         }
         case Token('-') if token.isUnary => {
-          buffer(pos) = new Multiplication(new Constant(-1), buffer(pos + 1).asInstanceOf[ElementaryFunction])
+          buffer(pos) = new Multiplication(new Constant(-1), buffer(pos + 1).asInstanceOf[ElementaryModifier])
           buffer.remove(pos + 1, 1)
         }
         case t: Token if List('^', '*', '/', '+', '-').contains(token.value) => {
-          val info_fst = buffer(pos - 1).asInstanceOf[ElementaryFunction]
-          val info_snd = buffer(pos + 1).asInstanceOf[ElementaryFunction]
+          val info_fst = buffer(pos - 1).asInstanceOf[ElementaryModifier]
+          val info_snd = buffer(pos + 1).asInstanceOf[ElementaryModifier]
           val c = token.value
           c.charAt(0) match {
             case '^' => buffer(pos) = new Power(info_fst, info_snd)
@@ -211,6 +198,6 @@ object ElementaryFunctionParser{
     for (c <- List('^', '/', '*', '+', '-')) {
       while (get(buffer, c) != -1) handle(get(buffer, c))
     }
-    return buffer(0).asInstanceOf[ElementaryFunction]
-  }
+    return buffer(0).asInstanceOf[ElementaryModifier]
+  }*/
 }
