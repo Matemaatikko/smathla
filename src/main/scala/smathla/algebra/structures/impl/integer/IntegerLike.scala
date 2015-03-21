@@ -31,16 +31,19 @@ object IntegerLike{
 
   val IntegerTag = implicitly[ClassTag[Integer]]
   val Integer64Tag = implicitly[ClassTag[Integer64]]
+  val IntegerInfTag = implicitly[ClassTag[IntegerInf]]
 
   def unit[A <: IntegerLike[A]: ClassTag] = (implicitly[ClassTag[A]] match {
     case IntegerTag => Integer.unit
     case Integer64Tag => Integer64.unit
+    case IntegerInfTag => IntegerInf.unit
     case _ => new NumberFormatException("implementation missing")
   }).asInstanceOf[A]
 
   def zero[A <: IntegerLike[A]: ClassTag] = (implicitly[ClassTag[A]] match {
     case IntegerTag => Integer.zero
     case Integer64Tag => Integer64.zero
+    case IntegerInfTag => IntegerInf.zero
     case _ => new NumberFormatException("implementation missing")
   }).asInstanceOf[A]
 }

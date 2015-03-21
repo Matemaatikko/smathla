@@ -15,7 +15,13 @@ case class Real(private val value: Float) extends RealLike[Real] {
   override def toString() = value.toString
   override def isZero = value == 0f
   override def isUnit = value == 1f
-  override def isPositive = value >= 0f
+  override def isPositive = value > 0f
+
+  override def equals(any: Any) = any match {
+    case Real(0f) => 0f == value
+    case Real(value0) => math.abs(value/value0 - 1) <= 1e-6
+    case _ => false
+  }
 
   override def compareTo(that: Real) = if (value < that.value) Lower else if (value == that.value) Equal else Higher
 

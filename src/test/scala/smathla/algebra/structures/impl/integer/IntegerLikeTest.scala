@@ -12,6 +12,9 @@ class IntegerLikeTest extends FreeSpecLike{
       "for Integer64" in {
         assert(Integer64(0) == IntegerLike.zero[Integer64])
       }
+      "for IntegerInf" in {
+        assert(IntegerInf(0) == IntegerLike.zero[IntegerInf])
+      }
     }
     "method: unit" -{
       "for Integer" in {
@@ -19,6 +22,9 @@ class IntegerLikeTest extends FreeSpecLike{
       }
       "for Integer64" in {
         assert(Integer64(1) == IntegerLike.unit[Integer64])
+      }
+      "for IntegerInf" in {
+        assert(IntegerInf(1) == IntegerLike.unit[IntegerInf])
       }
     }
   }
