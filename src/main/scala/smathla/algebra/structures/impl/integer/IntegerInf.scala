@@ -33,6 +33,7 @@ object IntegerInf extends Euclidean[IntegerInf] {
   def unit = new IntegerInf(BigInt(1))
   def apply(i: Int) = new IntegerInf(BigInt(i))
   def apply(i: Long) = new IntegerInf(BigInt(i))
+  def apply(i: Integer) = new IntegerInf(i.toInt)
 
   implicit def Long2IIntegerInf(l: Long) = new IntegerInf(l)
   implicit def Int2IntegerInf(i: Int) = new IntegerInf(i)

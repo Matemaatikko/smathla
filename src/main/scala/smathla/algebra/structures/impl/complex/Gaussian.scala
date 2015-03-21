@@ -4,16 +4,34 @@ import smathla.Types.{Gaussian64, Gaussian}
 import smathla.algebra.structures.impl.integer.{Integer, IntegerLike, Integer64}
 import smathla.algebra.structures.{Euclidean, EuclideanElem}
 
+import scala.reflect.ClassTag
 
-case class GaussianLike[A <: IntegerLike[A]](private val re: A, private val im: A) extends EuclideanElem[GaussianLike[A]] {
+
+case class GaussianLike[A <: IntegerLike[A]: ClassTag](private val re: A, private val im: A) extends EuclideanElem[GaussianLike[A]] {
 
   override def +(a: GaussianLike[A]) = new GaussianLike[A](re + a.Re, im + a.Im)
   override def unary_- = new GaussianLike[A](-re, -im)
 
-  override def isUnit = re == Integer(1) && im == Integer(0)
-  override def isZero = re == Integer(0) && im == Integer(0)
+  override def isUnit = re.isUnit && im.isZero
+  override def isZero = re.isZero && im.isZero
 
-  override def div(a: GaussianLike[A]): (GaussianLike[A], GaussianLike[A]) = ??? //TODO needs implementation!!!
+  override def div(gaussian: GaussianLike[A]): (GaussianLike[A], GaussianLike[A]) = {
+    val a = re
+    val b = im
+
+    val c = gaussian.re
+    val d = gaussian.im
+
+    val q = c*c + d*d
+    val r0 = a*c + b*d
+    val s0 = b*c - a*d
+
+    val m = r0/q + (if((r0 % q) >= q/(IntegerLike.unit[A]+IntegerLike.unit[A])) IntegerLike.unit[A] else IntegerLike.zero[A])
+    val n = s0/q + (if((s0 % q) >= q/(IntegerLike.unit[A]+IntegerLike.unit[A])) IntegerLike.unit[A] else IntegerLike.zero[A])
+
+    (GaussianLike(m, n), this - GaussianLike(m, n)*gaussian)
+  }
+
   override def *(a: GaussianLike[A]) = new GaussianLike[A](re * a.Re - im * a.Im, im * a.Re + re * a.Im)
 
   def Re = re

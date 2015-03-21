@@ -1,5 +1,5 @@
-- tests for real-package
 - tests for complex-package
+- tests of gcd to Integer, IntegerLike, IntegerInf, Gaussian, Gaussian64
 - tests for rational-package
 - tests for calculus-package object
 - tests for algebra-package object
@@ -7,6 +7,8 @@
 - tests for calculus.elementary package
 - fully implement different matrixes
 - tests for polynomial
+- add overflow exceptions to integer calculations
+- add overflow exceptions to real calculations (?)
 - geometry
     - plane
         - Point

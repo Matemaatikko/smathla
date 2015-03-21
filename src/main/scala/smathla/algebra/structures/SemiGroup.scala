@@ -15,7 +15,6 @@ trait SemiGroupElem[A <: SemiGroupElem[A]] {
    */
   def +(a: A): A
 
-  //TODO maybe should add method that executes + with n times.
 }
 
 trait SemiGroup[A <: SemiGroupElem[A]]
