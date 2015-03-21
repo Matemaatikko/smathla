@@ -16,7 +16,7 @@ class Gaussian64Test extends FreeSpecLike {
   def nextGaussian() = new Gaussian64(new Integer64(gen.nextLong()), new Integer64(gen.nextLong()))
   def nextGaussian(n: Int) = new Gaussian64(new Integer64(gen.nextInt(n)), new Integer64(gen.nextInt(n)))
 
-  "Gaussian" - {
+  "Gaussian64" - {
     "method: +" in {
       for(i <- 0 to 10){
         val a = nextGaussian()
@@ -58,6 +58,13 @@ class Gaussian64Test extends FreeSpecLike {
       for(a <- 0 to 10){
         val a = nextGaussian()
         assert(a.norm == a.Re*a.Re + a.Im*a.Im, s"Error with: $a")
+      }
+    }
+
+    "method: conjugate" in {
+      for(a <- 0 to 10){
+        val a = nextGaussian()
+        assert(a.conjugate == Gaussian64(a.Re, -a.Im), s"Error with: $a")
       }
     }
     "method: isZero" in {

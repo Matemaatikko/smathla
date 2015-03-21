@@ -57,6 +57,12 @@ class GaussianTest extends FreeSpecLike {
         assert(a.norm == a.Re*a.Re + a.Im*a.Im, s"Error with: $a")
       }
     }
+    "method: conjugate" in {
+      for(a <- 0 to 10){
+        val a = nextGaussian()
+        assert(a.conjugate == Gaussian(a.Re, -a.Im), s"Error with: $a")
+      }
+    }
     "method: isZero" in {
       assert(Gaussian.zero.isZero)
       assert(!Gaussian(Integer(1), Integer(0)).isZero)

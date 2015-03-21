@@ -16,9 +16,12 @@ case class Real64(private val value: Double) extends RealLike[Real64]{
   override def isZero = value == 0.0
   override def isUnit = value == 1.0
 
+  private val precision = 1e-14
+
   override def equals(any: Any) = any match {
-    case Real64(0.0) => value == 0.0
-    case Real64(value0) => math.abs(value/value0 - 1) <= 1e-15
+    case Real64(0.0) => value <= precision
+    case Real64(value0) if value != 0.0 => math.abs(value/value0 - 1) <= precision
+    case Real64(value0) if value == 0.0 => math.abs(value - value0) <= precision
     case _ => false
   }
 
@@ -30,4 +33,6 @@ case class Real64(private val value: Double) extends RealLike[Real64]{
 object Real64{
   def zero = Real64(0.0)
   def unit = Real64(1.0)
+
+  implicit def double2Real64(d: Double) = Real64(d)
 }

@@ -17,9 +17,12 @@ case class Real(private val value: Float) extends RealLike[Real] {
   override def isUnit = value == 1f
   override def isPositive = value > 0f
 
+  private val precision = 1e-6
+
   override def equals(any: Any) = any match {
-    case Real(0f) => 0f == value
-    case Real(value0) => math.abs(value/value0 - 1) <= 1e-6
+    case Real(0f) => value <= precision
+    case Real(value0) if value != 0f => math.abs(value/value0 - 1) <= precision
+    case Real(value0) if value == 0f => math.abs(value - value0) <= precision
     case _ => false
   }
 
@@ -31,4 +34,6 @@ case class Real(private val value: Float) extends RealLike[Real] {
 object Real{
   def zero = Real(0f)
   def unit = Real(1f)
+
+  implicit def float2Real(f: Float) = Real(f)
 }
