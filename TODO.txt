@@ -1,4 +1,3 @@
-- tests for rational-package
 - re-implement run method in algebra package.
 - tests for calculus-package object
 - tests for algebra-package object

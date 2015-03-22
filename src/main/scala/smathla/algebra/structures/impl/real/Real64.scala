@@ -16,7 +16,7 @@ case class Real64(private val value: Double) extends RealLike[Real64]{
   override def isZero = value == 0.0
   override def isUnit = value == 1.0
 
-  private val precision = 1e-14
+  private val precision = 1e-13
 
   override def equals(any: Any) = any match {
     case Real64(0.0) => value <= precision
