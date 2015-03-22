@@ -37,12 +37,21 @@ class GaussianTest extends FreeSpecLike {
       }
     }
     "method: div" in {
-      for(i <- 0 to 10){
+      for(i <- 0 to 100){
         val a = nextGaussian(10000)
         val b = nextGaussian(10000)
         val (q, r) = a.div(b)
         assert(a == b*q +r, s"Error with: $a and $b")
         assert(b.norm > r.norm, s"Error in norms with: $a and $b")
+      }
+    }
+    "method: gcd" in {
+      val n = 1000
+      for(i <- 0 to 10){
+        val a = nextGaussian(n)
+        val b = nextGaussian(n)
+        val answer = a.gcd(b)
+        assert((answer | a) && (answer | b), s"Error with: $a and $b")
       }
     }
     "method: unary_-" in {

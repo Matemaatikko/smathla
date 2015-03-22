@@ -45,6 +45,14 @@ class IntegerTest extends FreeSpecLike {
         assert(Integer(a)%Integer(b) == Integer(a%b), s"Error with: $a and $b")
       }
     }
+    "method: gcd" in {
+      for(i <- 0 to 10){
+        val a = gen.nextInt()
+        val b = gen.nextInt()
+        val answer = Integer(a).gcd(Integer(b))
+        assert((answer | Integer(a)) && (answer | Integer(b)), s"Error with: $a and $b")
+      }
+    }
     "method: isPositive" in {
       assert(!Integer(-1).isPositive, "-1")
       assert(!Integer(0).isPositive, "0")

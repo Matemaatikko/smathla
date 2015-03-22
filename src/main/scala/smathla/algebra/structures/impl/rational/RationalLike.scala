@@ -5,8 +5,10 @@ import smathla.algebra.structures.impl.integer
 import smathla.algebra.structures.impl.integer.{IntegerLike, Integer64}
 import smathla.algebra.structures.{Field, FieldElem}
 
+import scala.reflect.ClassTag
 
-case class RationalLike[A <: IntegerLike[A]](val numerator: A, val denominator: A) extends FieldElem[RationalLike[A]] {
+
+case class RationalLike[A <: IntegerLike[A]: ClassTag](val numerator: A, val denominator: A) extends FieldElem[RationalLike[A]] {
 
   override def *(a: RationalLike[A]) = new RationalLike(n * a.n, d * a.d)
   override def +(a: RationalLike[A]) = new RationalLike(n * a.d + a.n * d, d * a.d)
@@ -18,6 +20,15 @@ case class RationalLike[A <: IntegerLike[A]](val numerator: A, val denominator: 
 
   private def n = numerator
   private def d = denominator
+
+  /**
+   * This method returns nearest integer.
+   * If there is two then returns greater.
+   */
+  def round: A = {
+    val (q, r) = numerator.div(denominator)
+    q + (if(r.abs +r.abs >= denominator.abs) r.signum*IntegerLike.unit[A] else IntegerLike.zero[A])
+  }
 
   def reduce = new RationalLike[A](n / n.gcd(d), d / n.gcd(d))
 }

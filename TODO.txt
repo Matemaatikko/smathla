@@ -1,14 +1,13 @@
-- tests for complex-package
-- tests of gcd to Integer, IntegerLike, IntegerInf, Gaussian, Gaussian64
 - tests for rational-package
+- re-implement run method in algebra package.
 - tests for calculus-package object
 - tests for algebra-package object
 - calculus.elementary Operations: implement Reduction
 - tests for calculus.elementary package
 - fully implement different matrixes
 - tests for polynomial
-- add overflow exceptions to integer calculations
-- add overflow exceptions to real calculations (?)
+- add overflow exceptions to integer calculations (do not allow overflow)
+- add overflow exceptions to real calculations (?) (do not allow overflow)
 - geometry
     - plane
         - Point

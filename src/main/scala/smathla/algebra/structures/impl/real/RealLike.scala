@@ -6,8 +6,12 @@ import smathla.algebra.structures.impl.real.Real64
 
 import scala.reflect.ClassTag
 
-trait RealLike[A <: RealLike[A]] extends FieldElem[A] with TotallyOrderable[A]{
+abstract class RealLike[A <: RealLike[A]: ClassTag] extends FieldElem[A] with TotallyOrderable[A]{
   this: A =>
+
+  def abs = this*signum
+
+  def signum = if(isNegative) -RealLike.unit[A] else RealLike.unit[A]
 
   def isPositive: Boolean
   def isNegative: Boolean = !isZero && !isPositive

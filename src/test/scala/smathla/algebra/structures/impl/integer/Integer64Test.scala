@@ -45,6 +45,14 @@ class Integer64Test extends FreeSpecLike{
         assert(Integer64(a)%Integer64(b) == Integer64(a%b), s"Error with: $a and $b")
       }
     }
+    "method: gcd" in {
+      for(i <- 0 to 10){
+        val a = gen.nextLong()
+        val b = gen.nextLong()
+        val answer = Integer64(a).gcd(Integer64(b))
+        assert((answer | Integer64(a)) && (answer | Integer64(b)), s"Error with: $a and $b")
+      }
+    }
     "method: isPositive" in {
       assert(!Integer64(-1).isPositive, "-1")
       assert(!Integer64(0).isPositive, "0")

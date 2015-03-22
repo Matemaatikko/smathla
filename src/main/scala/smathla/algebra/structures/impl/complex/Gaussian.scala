@@ -2,6 +2,7 @@ package smathla.algebra.structures.impl.complex
 
 import smathla.Types.{Gaussian64, Gaussian}
 import smathla.algebra.structures.impl.integer.{Integer, IntegerLike, Integer64}
+import smathla.algebra.structures.impl.rational.RationalLike
 import smathla.algebra.structures.{Euclidean, EuclideanElem}
 
 import scala.reflect.ClassTag
@@ -15,6 +16,9 @@ case class GaussianLike[A <: IntegerLike[A]: ClassTag](private val re: A, privat
   override def isUnit = re.isUnit && im.isZero
   override def isZero = re.isZero && im.isZero
 
+  def /(gaussian: GaussianLike[A]): GaussianLike[A] = div(gaussian)._1
+  def %(gaussian: GaussianLike[A]): GaussianLike[A] = div(gaussian)._2
+
   override def div(gaussian: GaussianLike[A]): (GaussianLike[A], GaussianLike[A]) = {
     val a = re
     val b = im
@@ -26,8 +30,8 @@ case class GaussianLike[A <: IntegerLike[A]: ClassTag](private val re: A, privat
     val r0 = a*c + b*d
     val s0 = b*c - a*d
 
-    val m = r0/q + (if((r0 % q) >= q/(IntegerLike.unit[A]+IntegerLike.unit[A])) IntegerLike.unit[A] else IntegerLike.zero[A])
-    val n = s0/q + (if((s0 % q) >= q/(IntegerLike.unit[A]+IntegerLike.unit[A])) IntegerLike.unit[A] else IntegerLike.zero[A])
+    val m = RationalLike[A](r0, q).round
+    val n = RationalLike[A](s0, q).round
 
     (GaussianLike(m, n), this - GaussianLike(m, n)*gaussian)
   }

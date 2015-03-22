@@ -48,6 +48,15 @@ class Gaussian64Test extends FreeSpecLike {
         assert(b.norm > r.norm, s"Error in norms with: $a and $b")
       }
     }
+    "method: gcd" in {
+      val n = 1000000
+      for(i <- 0 to 10){
+        val a = nextGaussian(n)
+        val b = nextGaussian(n)
+        val answer = a.gcd(b)
+        assert((answer | a) && (answer | b), s"Error with: $a and $b")
+      }
+    }
     "method: unary_-" in {
       for(a <- 0 to 10){
         val a = nextGaussian()
@@ -60,7 +69,6 @@ class Gaussian64Test extends FreeSpecLike {
         assert(a.norm == a.Re*a.Re + a.Im*a.Im, s"Error with: $a")
       }
     }
-
     "method: conjugate" in {
       for(a <- 0 to 10){
         val a = nextGaussian()

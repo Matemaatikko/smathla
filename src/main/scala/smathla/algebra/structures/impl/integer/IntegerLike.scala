@@ -6,7 +6,7 @@ import smathla.algebra.structures.{EuclideanElem}
 import scala.reflect.ClassTag
 
 
-trait IntegerLike[A <: IntegerLike[A]] extends EuclideanElem[A] with TotallyOrderable[A]{
+abstract class IntegerLike[A <: IntegerLike[A]: ClassTag] extends EuclideanElem[A] with TotallyOrderable[A]{
   this: A =>
 
   def toInt: Int
@@ -22,6 +22,10 @@ trait IntegerLike[A <: IntegerLike[A]] extends EuclideanElem[A] with TotallyOrde
   def /(a: A): A
 
   override def div(a: A) = (this / a, this % a)
+
+  def abs = this*signum
+
+  def signum = if(isNegative) -IntegerLike.unit[A] else IntegerLike.unit[A]
 
   def isPositive: Boolean
   def isNegative: Boolean = !isZero && !isPositive
