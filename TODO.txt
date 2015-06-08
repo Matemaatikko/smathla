@@ -1,3 +1,8 @@
+Questions:
+- remove GroupElem extendation from RingElem
+
+
+TODO:
 - re-implement run method in algebra package.
 - tests for calculus-package object
 - tests for algebra-package object
@@ -51,3 +56,4 @@
 - implement quaternions
 - implement graphs
     - implement any amount of graph algorithms (3. prior. (??))
+- add quaternions

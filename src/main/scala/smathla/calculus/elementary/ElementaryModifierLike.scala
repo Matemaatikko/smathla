@@ -1,6 +1,6 @@
 package smathla.calculus.elementary
 
-import smathla.algebra.structures.impl.real.RealLike
+import smathla.core.algebra.structures.impl.real.RealLike
 import smathla.calculus
 
 /**
