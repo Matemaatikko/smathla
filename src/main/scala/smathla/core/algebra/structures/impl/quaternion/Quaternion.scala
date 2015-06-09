@@ -1,4 +1,4 @@
-package smathla.core.algebra.structures.impl.quaternions
+package smathla.core.algebra.structures.impl.quaternion
 
 import smathla.calculus
 import smathla.core.algebra.structures.{DivisionRingElem, Field}
