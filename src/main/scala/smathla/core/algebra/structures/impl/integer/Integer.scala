@@ -4,7 +4,7 @@ import smathla.core.algebra.definitions.{Equal, Higher, Lower}
 import smathla.core.algebra.structures.impl.real.Real
 import smathla.core.algebra.structures.{Euclidean}
 
-case class Integer(private val i: Int) extends IntegerLike[Integer] {
+case class Integer(private val i: Int) extends IntegerLike[Integer]{
 
   override def *(a: Integer) = new Integer(a.i * this.i)
   override def +(a: Integer) = new Integer(a.i + this.i)

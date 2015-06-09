@@ -3,6 +3,7 @@ Questions:
 
 
 TODO:
+- Add AnyVal to Real and Integer
 - re-implement run method in algebra package.
 - tests for calculus-package object
 - tests for algebra-package object

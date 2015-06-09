@@ -4,13 +4,13 @@ import Math.Geometry.Point2D
 import smathla.core.Types
 import Types.{Complex64, Complex}
 import smathla.core.algebra.structures.impl.real.{Real64, RealLike, Real}
-import smathla.core.algebra.structures.{Field, FieldElem}
+import smathla.core.algebra.structures.{Field, DivisionRingElem}
 import smathla.calculus
 
 import scala.reflect.ClassTag
 
 
-case class ComplexLike[A <: RealLike[A]](private val re: A, private val im: A) extends FieldElem[ComplexLike[A]] {
+case class ComplexLike[A <: RealLike[A]](private val re: A, private val im: A) extends DivisionRingElem[ComplexLike[A]] {
 
   val magnitude: A = calculus.sqrt(re * re + im * im)
   val angle: A = calculus.atan2(im, re)

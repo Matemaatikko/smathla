@@ -5,12 +5,12 @@ import Types._
 import smathla.core.algebra.definitions.TotallyOrderable
 import smathla.core.algebra.structures.impl.integer
 import smathla.core.algebra.structures.impl.integer.{IntegerLike, Integer64}
-import smathla.core.algebra.structures.{Field, FieldElem}
+import smathla.core.algebra.structures.{Field, DivisionRingElem}
 
 import scala.reflect.ClassTag
 
 
-case class RationalLike[A <: IntegerLike[A]: ClassTag](val numerator: A, val denominator: A) extends FieldElem[RationalLike[A]] with TotallyOrderable[RationalLike[A]] {
+case class RationalLike[A <: IntegerLike[A]: ClassTag](val numerator: A, val denominator: A) extends DivisionRingElem[RationalLike[A]] with TotallyOrderable[RationalLike[A]] {
 
   override def *(a: RationalLike[A]) = new RationalLike(numerator * a.numerator, denominator * a.denominator)
   override def +(a: RationalLike[A]) = new RationalLike(numerator * a.denominator + a.numerator * denominator, denominator * a.denominator)
