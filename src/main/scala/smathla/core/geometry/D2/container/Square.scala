@@ -3,12 +3,15 @@
  * and open the template in the editor.
  */
 
-package Math.Geometry.Container
+package smathla.core.geometry.D2.container
 
+import Math.Geometry.Container.Container
 import Math.Geometry.Point2D
+import smathla.calculus
+import smathla.core.algebra.structures.impl.real.RealLike
 
-class Square(corner: Point2D, oppositeCorner: Point2D) extends Container {
-  def contains(point: Point2D) =
-    math.min(corner.getX, oppositeCorner.getX) <= point.getX && point.getX <= math.max(corner.getX, oppositeCorner.getX) &&
-      math.min(corner.getY, oppositeCorner.getY) <= point.getY && point.getY <= math.max(corner.getY, oppositeCorner.getY)
+class Square[R <: RealLike[R]](corner: Point2D[R], oppositeCorner: Point2D[R]) extends Container[Point2D[R]] {
+  def contains(point: Point2D[R]) =
+    calculus.min(corner.x, oppositeCorner.x) <= point.x && point.x <= calculus.max(corner.x, oppositeCorner.x) &&
+      calculus.min(corner.y, oppositeCorner.y) <= point.y && point.y <= calculus.max(corner.y, oppositeCorner.y)
 }

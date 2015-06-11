@@ -21,6 +21,8 @@ case class Integer(private val i: Int) extends IntegerLike[Integer]{
   override def isZero = i == 0
   override def isUnit = i == 1
   override def compareTo(that: Integer) = if (i < that.i) Lower else if (i == that.i) Equal else Higher
+
+  override def signum = if(isNegative) -Integer.unit else Integer.unit
 }
 
 object Integer extends Euclidean[Integer] {

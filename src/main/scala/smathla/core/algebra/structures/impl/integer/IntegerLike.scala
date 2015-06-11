@@ -6,7 +6,7 @@ import smathla.core.algebra.structures.{EuclideanElem}
 import scala.reflect.ClassTag
 
 
-abstract class IntegerLike[A <: IntegerLike[A]: ClassTag] extends EuclideanElem[A] with TotallyOrderable[A]{
+trait IntegerLike[A <: IntegerLike[A]] extends EuclideanElem[A] with TotallyOrderable[A]{
   this: A =>
 
   def toInt: Int
@@ -25,7 +25,7 @@ abstract class IntegerLike[A <: IntegerLike[A]: ClassTag] extends EuclideanElem[
 
   def abs = this*signum
 
-  def signum = if(isNegative) -IntegerLike.unit[A] else IntegerLike.unit[A]
+  def signum: A
 
   def isPositive: Boolean
   def isNegative: Boolean = !isZero && !isPositive

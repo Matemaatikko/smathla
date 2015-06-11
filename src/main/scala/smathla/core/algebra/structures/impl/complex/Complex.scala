@@ -40,18 +40,16 @@ case class ComplexLike[A <: RealLike[A]](private val re: A, private val im: A) e
 
 
   //TODO-untested
-  def toPoint = new Point2D(re, im)
+  def toPoint = new Point2D[A](re, im)
 }
 
 //TODO untested
 object ComplexLike{
 
-  val realTag = implicitly[ClassTag[Real]]
-  val real64Tag = implicitly[ClassTag[Real64]]
-
   val complexTag = implicitly[ClassTag[Complex]]
   val complex64Tag = implicitly[ClassTag[Complex64]]
 
+  /*
   def unit[A <: ComplexLike[A]: ClassTag] = (implicitly[ClassTag[A]] match {
     case complexTag => Complex.unit
     case complex64Tag => Complex64.unit
@@ -64,6 +62,7 @@ object ComplexLike{
     case _ => new NumberFormatException("implementation missing")
   }).asInstanceOf[A]
 
+*/
   def polar[A <: RealLike[A]](angle: A, magnitude: A) = new ComplexLike[A](magnitude * calculus.cos(angle), magnitude * calculus.sin(angle))
 }
 

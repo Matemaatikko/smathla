@@ -24,6 +24,8 @@ case class Integer64(private val i: Long) extends IntegerLike[Integer64] {
   override def compareTo(that: Integer64) = if (i < that.i) Lower else if (i == that.i) Equal else Higher
 
   def toInteger = new Integer(i.toInt)
+
+  override def signum = if(isNegative) -Integer64.unit else Integer64.unit
 }
 
 object Integer64 extends Euclidean[Integer64] {

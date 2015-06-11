@@ -7,6 +7,10 @@ package object calculus {
   val PI = Real(math.Pi.toFloat)
   val PI64 = Real64(math.Pi)
 
+  //TODO untested (min, max)
+  def min[A <: RealLike[A]](a: A, b: A): A = if(a < b) a else b
+  def max[A <: RealLike[A]](a: A, b: A): A = if(a > b) a else b
+
   def sqrt[A <: RealLike[A]](a: A): A = (a match {
     case a: Real => Real(math.sqrt(a.toFloat).toFloat)
     case a: Real64 => Real64(math.sqrt(a.toDouble))

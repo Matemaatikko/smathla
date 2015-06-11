@@ -25,6 +25,8 @@ case class IntegerInf(private val i: BigInt) extends IntegerLike[IntegerInf] {
 
   def toInteger64 = new Integer64(i.toLong)
   def toInteger = new Integer(i.toInt)
+
+  override def signum = if(isNegative) -IntegerInf.unit else IntegerInf.unit
 }
 
 object IntegerInf extends Euclidean[IntegerInf] {
