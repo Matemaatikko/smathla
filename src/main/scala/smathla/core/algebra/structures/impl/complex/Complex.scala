@@ -4,7 +4,7 @@ import Math.Geometry.Point2D
 import smathla.core.Types
 import Types.{Complex64, Complex}
 import smathla.core.algebra.structures.impl.real.{Real64, RealLike, Real}
-import smathla.core.algebra.structures.{Field, DivisionRingElem}
+import smathla.core.algebra.structures.{DivisionRing, DivisionRingElem}
 import smathla.calculus
 
 import scala.reflect.ClassTag
@@ -66,7 +66,7 @@ object ComplexLike{
   def polar[A <: RealLike[A]](angle: A, magnitude: A) = new ComplexLike[A](magnitude * calculus.cos(angle), magnitude * calculus.sin(angle))
 }
 
-object Complex extends Field[Complex] {
+object Complex extends DivisionRing[Complex] {
 
   def zero = new Complex(Real.zero, Real.zero)
   def unit = new Complex(Real.unit, Real.zero)
@@ -77,7 +77,7 @@ object Complex extends Field[Complex] {
   def polar(angle: Real, magnitude: Real) = new Complex(magnitude * calculus.cos(angle), magnitude * calculus.sin(angle))
 }
 
-object Complex64 extends Field[Complex64] {
+object Complex64 extends DivisionRing[Complex64] {
 
   def zero = new Complex64(Real64.zero, Real64.zero)
   def unit = new Complex64(Real64.unit, Real64.zero)

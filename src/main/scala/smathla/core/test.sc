@@ -1,9 +1,4 @@
 
-import smathla.core.Types.Real
-import smathla.core.algebra.structures.impl.complex.Gaussian
-import smathla.core.algebra.structures.impl.rational.{Rational64, Rational}
-import smathla.core.algebra.structures.impl.real.Real
-
 import scala.reflect.ClassTag
 import scala.reflect.runtime.universe._
 import smathla.core.Types._

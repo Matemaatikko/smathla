@@ -19,4 +19,4 @@ trait DivisionRingElem[A <: DivisionRingElem[A]] extends DomainElem[A] {
   }
 }
 
-trait Field[A <: DivisionRingElem[A]] extends Domain[A]
+trait DivisionRing[A <: DivisionRingElem[A]] extends Domain[A]

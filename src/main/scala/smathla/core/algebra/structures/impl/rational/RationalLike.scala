@@ -5,7 +5,7 @@ import Types._
 import smathla.core.algebra.definitions.TotallyOrderable
 import smathla.core.algebra.structures.impl.integer
 import smathla.core.algebra.structures.impl.integer.{IntegerLike, Integer64}
-import smathla.core.algebra.structures.{Field, DivisionRingElem}
+import smathla.core.algebra.structures.{DivisionRing, DivisionRingElem}
 
 import scala.reflect.ClassTag
 
@@ -69,7 +69,7 @@ object RationalLike{
   }).asInstanceOf[A]
 }
 
-object Rational extends Field[Rational] {
+object Rational extends DivisionRing[Rational] {
 
   def zero = new Rational(integer.Integer.zero, integer.Integer.unit)
   def unit = new Rational(integer.Integer.unit, integer.Integer.unit)
@@ -78,13 +78,21 @@ object Rational extends Field[Rational] {
   def unapply(that: Rational) = Some(that.numerator, that.denominator)
 }
 
-object Rational64 extends Field[Rational64] {
+object Rational64 extends DivisionRing[Rational64] {
 
   def zero = new Rational64(Integer64.zero, Integer64.unit)
   def unit = new Rational64(Integer64.unit, Integer64.unit)
   def apply(numerator: Integer64, denominator: Integer64) = new Rational64(numerator, denominator)
   def apply(numerator: Integer64) = new Rational64(numerator, Integer64.unit)
   def unapply(that: Rational64) = Some(that.numerator, that.denominator)
+}
 
+object RationalInf extends DivisionRing[RationalInf] {
+
+  def zero = new RationalInf(IntegerInf.zero, IntegerInf.unit)
+  def unit = new RationalInf(IntegerInf.unit, IntegerInf.unit)
+  def apply(numerator: IntegerInf, denominator: IntegerInf) = new RationalInf(numerator, denominator)
+  def apply(numerator: IntegerInf) = new RationalInf(numerator, IntegerInf.unit)
+  def unapply(that: RationalInf) = Some(that.numerator, that.denominator)
 }
 
