@@ -2,14 +2,17 @@ Questions:
 - remove GroupElem extendation from RingElem
 
 
-TODO:
-- Add AnyVal to Real and Integer
+TODO core-package:
 - re-implement run method in algebra package.
 - tests for calculus-package object
 - tests for algebra-package object
-- calculus.elementary Operations: implement Reduction
-- tests for calculus.elementary package
+
 - fully implement different matrixes
+    - SquareMatrix
+    - FieldMatrix extends SquareMatrix
+- test for matrixes
+- test for quaternions
+
 - tests for polynomial
 - add overflow exceptions to integer calculations (do not allow overflow)
 - add overflow exceptions to real calculations (?) (do not allow overflow)
@@ -52,9 +55,11 @@ TODO:
 - tests for 2d geometry
 - tests for 3d geometry
 - tests for nd geometry
-- remake parser (2. prior.)
-- symbolic derivation (2. prior.)
 - implement quaternions
 - implement graphs
-    - implement any amount of graph algorithms (3. prior. (??))
-- add quaternions
+
+TODO calculus-package
+- calculus.elementary Operations: implement Reduction
+- tests for calculus.elementary package
+- remake parser (2. prior.)
+- symbolic derivation (2. prior.)

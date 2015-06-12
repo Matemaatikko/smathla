@@ -1,8 +1,10 @@
 
 package smathla.core.algebra.structures.impl.matrix
+/*
 
 import smathla.core.algebra.structures.RingElem
-import smathla.core.utils.Table
+
+
 
 /**
  * This class identifies square matrix over arbitrary ring.
@@ -40,3 +42,4 @@ object SquareMatrix {
   def apply[A <: RingElem[A]](mat: Table[A]) = new SquareMatrix[A](mat)
 
 }
+*/

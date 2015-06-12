@@ -1,16 +1,13 @@
 package smathla.core
 
-import smathla.calculus.elementary.ElementaryModifierLike
 import smathla.core.algebra.structures.impl.complex.{ComplexLike, GaussianLike}
 import smathla.core.algebra.structures.impl.integer
-import smathla.core.algebra.structures.impl.integer.{Integer64, IntegerInf}
 import smathla.core.algebra.structures.impl.rational.RationalLike
-import smathla.core.algebra.structures.impl.real.{Real, Real64}
 
 object Types {
   type JavaInteger = java.lang.Integer
 
-  type Rational = RationalLike[integer.Integer]
+  type Rational = RationalLike[Integer]
   type Rational64 = RationalLike[Integer64]
   type RationalInf = RationalLike[IntegerInf]
 
@@ -20,5 +17,10 @@ object Types {
   type Gaussian = GaussianLike[integer.Integer]
   type Gaussian64 = GaussianLike[Integer64]
 
-  type ElementaryModifier = ElementaryModifierLike[Real64]
+  type Integer = smathla.core.algebra.structures.impl.integer.Integer
+  type Integer64 = smathla.core.algebra.structures.impl.integer.Integer64
+  type IntegerInf = smathla.core.algebra.structures.impl.integer.IntegerInf
+
+  type Real = smathla.core.algebra.structures.impl.real.Real
+  type Real64 = smathla.core.algebra.structures.impl.real.Real64
 }
