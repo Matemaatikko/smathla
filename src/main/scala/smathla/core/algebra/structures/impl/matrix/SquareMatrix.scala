@@ -1,45 +1,39 @@
 
 package smathla.core.algebra.structures.impl.matrix
-/*
 
+import smathla.core.Types._
 import smathla.core.algebra.structures.RingElem
 
+import scala.reflect.runtime.universe._
 
+class SquareMatrix[N <: NumType: TypeTag, R <: RingElem[R]](private val matrix: SquareMatrixLike[N, R]) extends RingElem[SquareMatrix[N, R]] {
 
-/**
- * This class identifies square matrix over arbitrary ring.
- */
-class SquareMatrix[A <: RingElem[A]](override val matrix: Table[A]) extends Matrix[A](matrix) with RingElem[SquareMatrix[A]] {
+  val size = matrix.rowCount
 
-  override def +(a: SquareMatrix[A]): SquareMatrix[A] =
-    new SquareMatrix[A]((this.asInstanceOf[Matrix[A]] + a.asInstanceOf[Matrix[A]]).matrix)
+  override def +(a: SquareMatrix[N, R]): SquareMatrix[N, R] = this.matrix + a.matrix
+  override def *(a: SquareMatrix[N, R]): SquareMatrix[N, R] = this.matrix.*[N](a.matrix)
 
-  override def *(a: SquareMatrix[A]): SquareMatrix[A] =
-    new SquareMatrix[A]((this.asInstanceOf[Matrix[A]] * a.asInstanceOf[Matrix[A]]).matrix)
+  override def unary_- = matrix.map((_,_, r) => -r)
 
-  override def unary_- =
-    new SquareMatrix[A]((-this.asInstanceOf[Matrix[A]]).matrix)
-
-  def isZero: Boolean = {
-    for (i <- 0 until rowCount; j <- 0 until columnCount) {
-      if (!this(i, j).isZero) false
-    }
-    true
-  }
+  def isZero: Boolean = matrix.forall(_.isZero)
 
   def isUnit: Boolean = {
-    for (i <- 0 until rowCount; j <- 0 until columnCount) {
-      if (i != j && !this(i, j).isZero) false
-      else if (i == j && !this(i, j).isUnit) false
-    }
-    true
+    (0 until matrix.elements.length).forall(ind => ((ind/size == ind%size)&& matrix.elements(ind).isUnit) || matrix.elements(ind).isZero)
   }
+
+  def determinant: R = ???
 
 }
 
 object SquareMatrix {
 
-  def apply[A <: RingElem[A]](mat: Table[A]) = new SquareMatrix[A](mat)
+  def apply[N <: NumType: TypeTag, R <: RingElem[R]](elements: Seq[R]): SquareMatrix[N, R] = new MatrixLike[N, N, R](elements)
+
+  //TODO tools for square matrixes
+
+  def fillDiagonal = ???
+
+  implicit def matrix2square[N <: NumType: TypeTag, R <: RingElem[R]](matrix: SquareMatrixLike[N, R]): SquareMatrix[N, R] = new SquareMatrix[N, R](matrix)
 
 }
-*/
+

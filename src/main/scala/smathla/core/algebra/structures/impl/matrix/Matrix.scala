@@ -46,7 +46,7 @@ class `35` extends NumType
 /**
  * TODO untested
  */
-class Matrix[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val elements: Seq[R]){
+class MatrixLike[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val elements: Seq[R]){
 
   val rowCount = typeOf[N].typeSymbol.toString.substring(6).toInt
   val columnCount = typeOf[M].typeSymbol.toString.substring(6).toInt
@@ -54,54 +54,44 @@ class Matrix[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val
 
   def apply(i: Int, j: Int): R = elements(columnCount*i + j)
 
-  def *[K <: NumType: TypeTag](matrix: Matrix[M, K, R]): Matrix[N, K, R] = {
+  def *[K <: NumType: TypeTag](matrix: MatrixLike[N, K, R]): MatrixLike[N, K, R] = {
     val list = for(
       n <- 0 until rowCount;
       k <- 0 until matrix.columnCount
     ) yield (1 until columnCount).foldLeft(this(n, 0)*matrix(0, k))((sum, ind) => sum + this(n, ind)*matrix(ind, k))
-    new Matrix[N, K, R](list)
+    new MatrixLike[N, K, R](list)
   }
 
-  def +(matrix: Matrix[N, M, R]): Matrix[N, M, R] =
-    new Matrix[N, M, R](for(i <- 0 until elements.size) yield elements(i) + matrix.elements(i))
+  def +(matrix: MatrixLike[N, M, R]): MatrixLike[N, M, R] =
+    new MatrixLike[N, M, R](for(i <- 0 until elements.size) yield elements(i) + matrix.elements(i))
 
-  def *(r: R): Matrix[N, M, R] =
-    new Matrix[N, M, R](for(i <- 0 until elements.size) yield elements(i)*r)
+  def *(r: R): MatrixLike[N, M, R] =
+    new MatrixLike[N, M, R](for(i <- 0 until elements.size) yield elements(i)*r)
 
-  def transpose: Matrix[M, N, R] =
-    new Matrix[M, N, R](for(index <- 0 until elements.size) yield this(index%rowCount, index/rowCount))
+  def transpose: MatrixLike[N, M, R] =
+    new MatrixLike[N, M, R](for(index <- 0 until elements.size) yield this(index%rowCount, index/rowCount))
 
   override def toString(): String = {
     (0 until rowCount).foldLeft("[")((str, n) => str + (1 until columnCount).foldLeft("["+this(n, 0))((str, m) => str + ", "+this(n, m)) + "]") + "]"
   }
 
   override def equals(any: Any): Boolean = any match {
-    case a: Matrix[N, M, R] => a.elements == elements
+    case a: MatrixLike[N, M, R] => a.elements == elements
     case _ => false
   }
 
   //MAPPING
 
-  def map[B <: RingElem[B]](f: R => B): Matrix[N, M, B] =
-    new Matrix[N, M, B](elements.map(f(_)))
-
-  def mapRow(row: Int, f: R => R) =
-    new Matrix[N, M, R](
-      for(index <- 0 until elements.length)
-        yield(
-          if(index/columnCount == row) f(elements(index))
-          else elements(index)
-          )
+  def map[B <: RingElem[B]](f: (Int, Int, R) => B): MatrixLike[N, M, B] =
+    new MatrixLike[N, M, B](
+      for(
+        i <- 0 until columnCount;
+        j <- 0 until rowCount
+      ) yield(f(i, j, this(i, j)))
     )
 
-  def mapColumn(column: Int, f: R => R) =
-    new Matrix[N, M, R](
-      for(index <- 0 until elements.length)
-        yield(
-          if(index%columnCount == column) f(elements(index))
-          else elements(index)
-          )
-    )
+
+  def forall(f: R => Boolean): Boolean = elements.forall(f)
 
   //ROW OPERATIONS:
 
@@ -111,8 +101,8 @@ class Matrix[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val
    * 0 <= row1 < rowCount
    * 0 <= row2 < rowCount
    */
-  def swap(row1: Int, row2: Int): Matrix[N, M, R] =
-    new Matrix[N, M, R](
+  def swap(row1: Int, row2: Int): MatrixLike[N, M, R] =
+    new MatrixLike[N, M, R](
       for(index <- 0 until elements.length)
         yield(
           if(index/columnCount == row1) elements(row2*columnCount + index%columnCount)
@@ -126,7 +116,7 @@ class Matrix[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val
    * There are some pre requirements:
    * 0 <= row < rowCount
    */
-  def mul(row: Int, value: R) = mapRow(row, _*value)
+  def mul(row: Int, value: R) = map((i, _, r) => if(i == row) r*value else r)
 
   /**
    * Adds first row to another.
@@ -134,8 +124,8 @@ class Matrix[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val
    * 0 <= row < rowCount
    * 0 <= to < rowCount
    */
-  def sum(row: Int, to: Int): Matrix[N, M, R] =
-    new Matrix[N, M, R](
+  def sum(row: Int, to: Int): MatrixLike[N, M, R] =
+    new MatrixLike[N, M, R](
       for(index <- 0 until elements.length)
         yield(
           if(index/columnCount == to) elements(index) + elements(row*columnCount + index%columnCount)
@@ -147,10 +137,12 @@ class Matrix[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val
 
 object Matrix{
 
-  def fill[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](r: R): Matrix[N, M, R] = {
+  //TODO tools for matrixes
+
+  def fill[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](r: R): MatrixLike[N, M, R] = {
     val rowCount = typeOf[N].typeSymbol.toString.substring(6).toInt
     val columnCount = typeOf[M].typeSymbol.toString.substring(6).toInt
     val size = rowCount*columnCount
-    new Matrix[N, M, R](Seq.fill(size)(r))
+    new MatrixLike[N, M, R](Seq.fill(size)(r))
   }
 }

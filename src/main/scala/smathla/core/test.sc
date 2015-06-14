@@ -5,7 +5,7 @@ import smathla.core.Types._
 
 import smathla.core.algebra.structures.impl.matrix._
 
-
-val a = Matrix.fill[`3`, `3`, Real](Real(1))
-
-a.toString()
+Complex(1.0, 2.0) match {
+  case Complex(Real(1.0), Real(2.0)) => println("yes")
+  case _ => println("no")
+}

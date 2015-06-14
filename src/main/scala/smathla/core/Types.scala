@@ -1,8 +1,11 @@
 package smathla.core
 
+import smathla.core.algebra.structures.RingElem
 import smathla.core.algebra.structures.impl.complex.{Complex, ComplexLike, GaussianLike}
 import smathla.core.algebra.structures.impl.integer
+import smathla.core.algebra.structures.impl.matrix.NumType
 import smathla.core.algebra.structures.impl.rational.RationalLike
+
 
 object Types {
   type JavaInteger = java.lang.Integer
@@ -50,4 +53,12 @@ object Types {
 
   type Real64 = smathla.core.algebra.structures.impl.real.Real64
   val Real64 = smathla.core.algebra.structures.impl.real.Real64
+
+  //Matrix
+
+  type Matrix[N <: NumType, M <: NumType, R <: RingElem[R]] = smathla.core.algebra.structures.impl.matrix.MatrixLike[N, M, R]
+  val Matrix = smathla.core.algebra.structures.impl.matrix.Matrix
+
+  type SquareMatrixLike[N <: NumType, R <: RingElem[R]] = smathla.core.algebra.structures.impl.matrix.MatrixLike[N, N, R]
+  val SquareMatrix = smathla.core.algebra.structures.impl.matrix.SquareMatrix
 }

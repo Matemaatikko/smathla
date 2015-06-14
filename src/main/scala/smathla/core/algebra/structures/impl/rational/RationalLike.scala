@@ -9,7 +9,6 @@ import smathla.core.algebra.structures.{DivisionRing, DivisionRingElem}
 
 import scala.reflect.ClassTag
 
-
 case class RationalLike[A <: IntegerLike[A]: ClassTag](val numerator: A, val denominator: A) extends DivisionRingElem[RationalLike[A]] with TotallyOrderable[RationalLike[A]] {
 
   override def *(a: RationalLike[A]) = new RationalLike(numerator * a.numerator, denominator * a.denominator)

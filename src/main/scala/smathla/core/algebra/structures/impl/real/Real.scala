@@ -36,4 +36,5 @@ object Real{
   def unit = Real(1f)
 
   implicit def float2Real(f: Float) = Real(f)
+  implicit def double2Real(d: Double) = Real(d.toFloat)
 }

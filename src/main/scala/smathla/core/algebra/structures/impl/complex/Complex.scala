@@ -2,13 +2,14 @@ package smathla.core.algebra.structures.impl.complex
 
 import Math.Geometry.Point2D
 import smathla.core.Types
-import Types.{Complex64, Complex}
+import Types._
 import smathla.core.algebra.structures.impl.real.{Real64, RealLike, Real}
 import smathla.core.algebra.structures.{DivisionRing, DivisionRingElem}
 import smathla.calculus
 
 import scala.reflect.ClassTag
 
+import Real._
 
 case class ComplexLike[A <: RealLike[A]](private val re: A, private val im: A) extends DivisionRingElem[ComplexLike[A]] {
 
@@ -50,6 +51,7 @@ object ComplexLike{
   val complex64Tag = implicitly[ClassTag[Complex64]]
 
   /*
+  TODO
   def unit[A <: ComplexLike[A]: ClassTag] = (implicitly[ClassTag[A]] match {
     case complexTag => Complex.unit
     case complex64Tag => Complex64.unit
