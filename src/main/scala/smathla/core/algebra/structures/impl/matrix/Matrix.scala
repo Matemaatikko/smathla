@@ -54,7 +54,7 @@ class MatrixLike[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]]
 
   def apply(i: Int, j: Int): R = elements(columnCount*i + j)
 
-  def *[K <: NumType: TypeTag](matrix: MatrixLike[N, K, R]): MatrixLike[N, K, R] = {
+  def *[K <: NumType: TypeTag](matrix: MatrixLike[M, K, R]): MatrixLike[N, K, R] = {
     val list = for(
       n <- 0 until rowCount;
       k <- 0 until matrix.columnCount

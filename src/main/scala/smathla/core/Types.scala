@@ -10,6 +10,7 @@ import smathla.core.algebra.structures.impl.rational.RationalLike
 object Types {
   type JavaInteger = java.lang.Integer
 
+
   //Rational
 
   type Rational = RationalLike[Integer]
