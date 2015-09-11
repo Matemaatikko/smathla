@@ -1,6 +1,5 @@
 import sbt._
 import Keys._
-import BuildProperties._
 
 scalaVersion := "2.11.7"
 
@@ -17,6 +16,3 @@ scalacOptions ++= Seq(
   "-target:jvm-1.8",
   "-encoding", "UTF-8"
 )
-
-libraryDependencies ++= Dependencies.dependencies
-
