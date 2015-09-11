@@ -4,7 +4,7 @@ import BuildProperties._
 
 scalaVersion := "2.11.7"
 
-name := projectNameProperty
+name := "smathla"
 
 version := "1.0"
 
