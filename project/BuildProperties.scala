@@ -16,7 +16,7 @@ object BuildProperties {
   }
   val properties = readProperties("local.properties").orElse(readProperties("default.properties"))
   //if you want to set the defaults in this file...
-  val projectNameProperty: String = properties.flatMap( props => Option(props.getProperty("project.name"))).getOrElse("myproject")
+  val projectNameProperty: String = properties.flatMap( props => Option(props.getProperty("project.name"))).getOrElse("smathla")
   //if you want to set the defaults in .sbt file...
   def propertyOption(key: String): Option[String] = properties.flatMap(props => Option(props.getProperty(key)))
 }
