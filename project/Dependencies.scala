@@ -10,12 +10,14 @@ object Dependencies {
     val scalaTest = "2.2.4"
     val mockito = "1.9.5"
     val scalaLogging = "2.1.2"
+    val shapeless =  "2.2.5"
   }
 
   val scalaTest = "org.scalatest" % "scalatest_2.11" % Version.scalaTest
   val mockito = "org.mockito" % "mockito-all" % Version.mockito
   val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % Version.scalaLogging
+  val shapeless = "com.chuusai" %% "shapeless" % Version.shapeless
 
   // Project
-  val dependencies = Seq(scalaLogging, scalaTest, mockito % "test")
+  val dependencies = Seq(scalaLogging, scalaTest, shapeless, mockito % "test")
 }

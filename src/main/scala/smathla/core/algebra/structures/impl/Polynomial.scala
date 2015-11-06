@@ -14,7 +14,7 @@ case class Polynomial[E <: RingElem[E]] private(val map: Map[Integer, E]) extend
       if (ca.contains(i._1 + j._1)) ca.updated(i._1 + j._1, ca(i._1 + j._1) + i._2 * j._2)
       else ca += i._1 + j._1 -> i._2 * j._2
     }
-    Polynomial(ca.toMap[Integer, E])
+    Polynomial(ca)
   }
 
   override def +(a: Polynomial[E]) = {
@@ -24,7 +24,7 @@ case class Polynomial[E <: RingElem[E]] private(val map: Map[Integer, E]) extend
       if (ca.contains(i._1)) ca.updated(i._1, ca(i._1) + i._2)
       else ca += i._1 -> i._2
     }
-    Polynomial(ca.toMap[Integer, E])
+    Polynomial(ca)
   }
 
   override def unary_- = Polynomial(map.map(a => (a._1, -a._2)))

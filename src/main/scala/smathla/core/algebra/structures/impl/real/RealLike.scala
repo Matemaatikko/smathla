@@ -2,7 +2,6 @@ package smathla.core.algebra.structures.impl.real
 
 import smathla.core.algebra.definitions.TotallyOrderable
 import smathla.core.algebra.structures.DivisionRingElem
-import smathla.core.algebra.structures.impl.real.Real64
 
 import scala.reflect.ClassTag
 
