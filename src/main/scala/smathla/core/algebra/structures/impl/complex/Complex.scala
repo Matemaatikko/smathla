@@ -1,10 +1,12 @@
 package smathla.core.algebra.structures.impl.complex
 
 import Math.Geometry.Point2D
+import shapeless.Sized
 import smathla.core._
 import smathla.core.algebra.structures.field.{DivisionRingElem, DivisionRing}
 import smathla.core.algebra.structures.impl.real.{Real64, RealLike, Real}
 import smathla.calculus
+import smathla.core.geometry.Point
 
 import scala.reflect.ClassTag
 
@@ -40,7 +42,7 @@ case class ComplexLike[A <: RealLike[A]](private val re: A, private val im: A) e
 
 
   //TODO-untested
-  def toPoint = new Point2D[A](re, im)
+  def toPoint = Point(Sized(re, im))
 }
 
 //TODO untested

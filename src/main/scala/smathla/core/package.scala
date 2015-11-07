@@ -83,6 +83,8 @@ package object core {
   type Vector[N <: Nat, R <: RingElem[R]] = smathla.core.algebra.structures.impl.vector.Vector[N, R]
   val Vector = smathla.core.algebra.structures.impl.vector.Vector
 
+  val RealVector = smathla.core.geometry.RealVector
+
   type Matrix[N <: Nat, M <: Nat, R <: RingElem[R]] = smathla.core.algebra.structures.impl.matrix.Matrix[N, M, R]
   val Matrix = smathla.core.algebra.structures.impl.matrix.Matrix
 

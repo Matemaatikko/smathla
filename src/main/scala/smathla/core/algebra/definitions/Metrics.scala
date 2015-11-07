@@ -9,6 +9,11 @@ import smathla.core.algebra.structures.impl.real.RealLike
   *   3. d(x, y) == d(y, x)
   *   4. d(x, z) <= d(x, y) + d(y, z)
   */
-trait Metrics[M] {
-  def distance[R <: RealLike[R]](x: M, y: M): R
+trait Metrics[M, R <: RealLike[R]] {
+  def distance(x: M, y: M): R
 }
+
+trait MetricSpaceElement[M, R <: RealLike[R]] {
+  def distance(x: M): R
+}
+

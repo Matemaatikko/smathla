@@ -1,6 +1,7 @@
 package smathla.core.algebra.structures.impl.vector
 
 import shapeless.{AdditiveCollection, Nat, Sized}
+import smathla.core.algebra.definitions.Metrics
 import smathla.core.algebra.structures.ring.RingElem
 
 //TODO untested
@@ -10,7 +11,7 @@ class Vector[N <: Nat, R <: RingElem[R]](val vector: Sized[Seq[R], N]){
   val vec = vector.unsized
   val size = vector.unsized.size
 
-  private def get(i: Int) = vec(i)
+  private[smathla] def get(i: Int) = vec(i)
   def apply(i: Int): Option[R] =  if(vec.isDefinedAt(i)) Some(vec(i)) else None
 
   def +(vector: Vector[N, R]): Vector[N, R] = {
@@ -23,6 +24,10 @@ class Vector[N <: Nat, R <: RingElem[R]](val vector: Sized[Seq[R], N]){
       }
     )))
   }
+
+  def -(vector: Vector[N, R]): Vector[N, R] = this + -vector
+
+  def unary_- = new VectorOps(this).map(-_)
 
   /**
     * Dot product (scalar product) of 2 vector:
