@@ -1,10 +1,9 @@
 package smathla.core.algebra.structures.impl.complex
 
-import smathla.core.Types
-import Types.{Gaussian64, Gaussian}
+import smathla.core._
 import smathla.core.algebra.structures.impl.integer.{Integer, IntegerLike, Integer64}
 import smathla.core.algebra.structures.impl.rational.RationalLike
-import smathla.core.algebra.structures.{Euclidean, EuclideanElem}
+import smathla.core.algebra.structures.ring.{EuclideanElem, Euclidean}
 
 import scala.reflect.ClassTag
 

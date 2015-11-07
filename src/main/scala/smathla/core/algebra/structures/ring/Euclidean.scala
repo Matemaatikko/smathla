@@ -1,4 +1,4 @@
-package smathla.core.algebra.structures
+package smathla.core.algebra.structures.ring
 
 import scala.annotation.tailrec
 

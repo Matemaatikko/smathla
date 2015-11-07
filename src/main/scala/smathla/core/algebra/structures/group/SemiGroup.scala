@@ -1,8 +1,4 @@
-package smathla.core.algebra.structures
-
-import smathla.core.Types
-import Types._
-import smathla.core.algebra.structures.impl.integer.Integer
+package smathla.core.algebra.structures.group
 
 /**
  * This class identifies element of algebraic structure that called SemiGroup.

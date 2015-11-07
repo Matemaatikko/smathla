@@ -1,7 +1,7 @@
 package smathla.core.algebra.structures.impl.integer
 
 import smathla.core.algebra.definitions.TotallyOrderable
-import smathla.core.algebra.structures.{EuclideanElem}
+import smathla.core.algebra.structures.ring.EuclideanElem
 
 import scala.reflect.ClassTag
 

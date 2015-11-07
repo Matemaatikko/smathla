@@ -1,15 +1,38 @@
-package smathla.core
+package smathla
 
-import smathla.core.algebra.structures.RingElem
-import smathla.core.algebra.structures.impl.complex.{Complex, ComplexLike, GaussianLike}
-import smathla.core.algebra.structures.impl.integer
-import smathla.core.algebra.structures.impl.matrix.NumType
+import shapeless.{Succ, Nat}
+import smathla.core.algebra.structures.impl.complex.{GaussianLike, ComplexLike}
 import smathla.core.algebra.structures.impl.rational.RationalLike
+import smathla.core.algebra.structures.ring.RingElem
 
-
-object Types {
+package object core {
   type JavaInteger = java.lang.Integer
 
+  type `1` = Nat._1
+  type `2` = Nat._2
+  type `3` = Nat._3
+  type `4` = Nat._4
+  type `5` = Nat._5
+  type `6` = Nat._6
+  type `7` = Nat._7
+  type `8` = Nat._8
+  type `9` = Nat._9
+  type `10` = Nat._10
+  type `11` = Nat._11
+  type `12` = Nat._12
+  type `13` = Nat._13
+  type `14` = Nat._14
+  type `15` = Nat._15
+  type `16` = Nat._16
+  type `17` = Nat._17
+  type `18` = Nat._18
+  type `19` = Nat._19
+  type `20` = Nat._20
+  type `21` = Nat._21
+  type `22` = Nat._22
+  type `23` = Succ[Nat._22]
+  type `24` = Succ[`23`]
+  type `25` = Succ[`24`]
 
   //Rational
 
@@ -57,9 +80,12 @@ object Types {
 
   //Matrix
 
-  type Matrix[N <: NumType, M <: NumType, R <: RingElem[R]] = smathla.core.algebra.structures.impl.matrix.MatrixLike[N, M, R]
+  type Vector[N <: Nat, R <: RingElem[R]] = smathla.core.algebra.structures.impl.vector.Vector[N, R]
+  val Vector = smathla.core.algebra.structures.impl.vector.Vector
+
+  type Matrix[N <: Nat, M <: Nat, R <: RingElem[R]] = smathla.core.algebra.structures.impl.matrix.Matrix[N, M, R]
   val Matrix = smathla.core.algebra.structures.impl.matrix.Matrix
 
-  type SquareMatrixLike[N <: NumType, R <: RingElem[R]] = smathla.core.algebra.structures.impl.matrix.MatrixLike[N, N, R]
+  type SquareMatrix[N <: Nat, R <: RingElem[R]] = smathla.core.algebra.structures.impl.matrix.SquareMatrix[N, R]
   val SquareMatrix = smathla.core.algebra.structures.impl.matrix.SquareMatrix
 }

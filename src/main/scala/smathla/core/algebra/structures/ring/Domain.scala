@@ -1,4 +1,4 @@
-package smathla.core.algebra.structures
+package smathla.core.algebra.structures.ring
 
 /**
  * This class identifies element of algebraic structure that is called Domain.

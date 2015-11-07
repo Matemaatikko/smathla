@@ -1,7 +1,6 @@
 package smathla.core.algebra.structures.impl.real
 
 import smathla.core.algebra.definitions.{Equal, Higher, Lower}
-import smathla.core.algebra.structures.{Euclidean}
 
 case class Real64(private val value: Double) extends RealLike[Real64]{
 

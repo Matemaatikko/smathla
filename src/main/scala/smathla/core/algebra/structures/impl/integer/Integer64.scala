@@ -1,8 +1,7 @@
 package smathla.core.algebra.structures.impl.integer
 
 import smathla.core.algebra.definitions.{Equal, Higher, Lower, TotallyOrderable}
-import smathla.core.algebra.structures.impl.real.Real
-import smathla.core.algebra.structures.{Euclidean, EuclideanElem}
+import smathla.core.algebra.structures.ring.Euclidean
 
 case class Integer64(private val i: Long) extends IntegerLike[Integer64] {
 

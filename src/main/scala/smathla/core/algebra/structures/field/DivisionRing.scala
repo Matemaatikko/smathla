@@ -1,4 +1,6 @@
-package smathla.core.algebra.structures
+package smathla.core.algebra.structures.field
+
+import smathla.core.algebra.structures.ring.{Domain, DomainElem}
 
 /**
  * This class identifies element of algebraic structure that is called Division.

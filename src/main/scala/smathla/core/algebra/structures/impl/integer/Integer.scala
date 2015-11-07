@@ -2,7 +2,7 @@ package smathla.core.algebra.structures.impl.integer
 
 import smathla.core.algebra.definitions.{Equal, Higher, Lower}
 import smathla.core.algebra.structures.impl.real.Real
-import smathla.core.algebra.structures.{Euclidean}
+import smathla.core.algebra.structures.ring.Euclidean
 
 case class Integer(private val i: Int) extends IntegerLike[Integer]{
 

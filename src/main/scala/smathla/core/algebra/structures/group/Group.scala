@@ -1,4 +1,6 @@
-package smathla.core.algebra.structures
+package smathla.core.algebra.structures.group
+
+import smathla.core.algebra.structures.group.Monoid
 
 /**
  * This class identifies element of algebraic structure that called Group.

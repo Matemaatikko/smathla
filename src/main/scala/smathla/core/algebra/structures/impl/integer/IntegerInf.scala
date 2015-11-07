@@ -1,7 +1,7 @@
 package smathla.core.algebra.structures.impl.integer
 
 import smathla.core.algebra.definitions.{Equal, Higher, Lower}
-import smathla.core.algebra.structures.{Euclidean}
+import smathla.core.algebra.structures.ring.Euclidean
 
 case class IntegerInf(private val i: BigInt) extends IntegerLike[IntegerInf] {
 

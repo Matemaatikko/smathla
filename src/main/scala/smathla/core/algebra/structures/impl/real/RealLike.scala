@@ -1,11 +1,11 @@
 package smathla.core.algebra.structures.impl.real
 
 import smathla.core.algebra.definitions.TotallyOrderable
-import smathla.core.algebra.structures.DivisionRingElem
+import smathla.core.algebra.structures.field.{FieldElem}
 
 import scala.reflect.ClassTag
 
-abstract class RealLike[A <: RealLike[A]: ClassTag] extends DivisionRingElem[A] with TotallyOrderable[A]{
+abstract class RealLike[A <: RealLike[A]: ClassTag] extends FieldElem[A] with TotallyOrderable[A]{
   this: A =>
 
   def abs = this*signum

@@ -1,15 +1,14 @@
 package smathla.core.algebra.structures.impl.rational
 
-import smathla.core.Types
-import Types._
+import smathla.core._
 import smathla.core.algebra.definitions.TotallyOrderable
+import smathla.core.algebra.structures.field.{Field, FieldElem}
 import smathla.core.algebra.structures.impl.integer
 import smathla.core.algebra.structures.impl.integer.{IntegerLike, Integer64}
-import smathla.core.algebra.structures.{DivisionRing, DivisionRingElem}
 
 import scala.reflect.ClassTag
 
-case class RationalLike[A <: IntegerLike[A]: ClassTag](val numerator: A, val denominator: A) extends DivisionRingElem[RationalLike[A]] with TotallyOrderable[RationalLike[A]] {
+case class RationalLike[A <: IntegerLike[A]: ClassTag](val numerator: A, val denominator: A) extends FieldElem[RationalLike[A]] with TotallyOrderable[RationalLike[A]] {
 
   override def *(a: RationalLike[A]) = new RationalLike(numerator * a.numerator, denominator * a.denominator)
   override def +(a: RationalLike[A]) = new RationalLike(numerator * a.denominator + a.numerator * denominator, denominator * a.denominator)
@@ -68,7 +67,7 @@ object RationalLike{
   }).asInstanceOf[A]
 }
 
-object Rational extends DivisionRing[Rational] {
+object Rational extends Field[Rational] {
 
   def zero = new Rational(integer.Integer.zero, integer.Integer.unit)
   def unit = new Rational(integer.Integer.unit, integer.Integer.unit)
@@ -77,7 +76,7 @@ object Rational extends DivisionRing[Rational] {
   def unapply(that: Rational) = Some(that.numerator, that.denominator)
 }
 
-object Rational64 extends DivisionRing[Rational64] {
+object Rational64 extends Field[Rational64] {
 
   def zero = new Rational64(Integer64.zero, Integer64.unit)
   def unit = new Rational64(Integer64.unit, Integer64.unit)
@@ -86,7 +85,7 @@ object Rational64 extends DivisionRing[Rational64] {
   def unapply(that: Rational64) = Some(that.numerator, that.denominator)
 }
 
-object RationalInf extends DivisionRing[RationalInf] {
+object RationalInf extends Field[RationalInf] {
 
   def zero = new RationalInf(IntegerInf.zero, IntegerInf.unit)
   def unit = new RationalInf(IntegerInf.unit, IntegerInf.unit)

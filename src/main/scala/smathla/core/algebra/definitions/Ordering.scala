@@ -1,17 +1,20 @@
 package smathla.core.algebra.definitions
 
 trait Order
+trait TotalOrder
 
-case object Lower extends Order
+case object Lower extends Order with TotalOrder
 
-case object Higher extends Order
+case object Higher extends Order with TotalOrder
 
-case object Equal extends Order
+case object Equal extends Order with TotalOrder
+
+case object NotComparable extends Order
 
 
 trait TotallyOrderable[A] {
 
-  def compareTo(another: A): Order
+  def compareTo(another: A): TotalOrder
 
   def <(another: A): Boolean = this.compareTo(another) == Lower
 
@@ -33,9 +36,14 @@ trait PartiallyOrderable[A] {
    */
   def compareTo(another: A): Order
 
-  def isComparableWith(another: A)
+  def isComparableWith(another: A) = this.compareTo(another) == NotComparable
 
-  def <(another: A): Boolean = this.compareTo(another) == Lower
+
+  /**
+   * NOTE: If not comparable then false is returned
+   */
+
+  def <(another: A): Boolean =  this.compareTo(another) == Lower
 
   def >(another: A): Boolean = this.compareTo(another) == Higher
 

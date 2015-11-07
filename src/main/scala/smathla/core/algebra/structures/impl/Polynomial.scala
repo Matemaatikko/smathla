@@ -1,10 +1,7 @@
 package smathla.core.algebra.structures.impl
 
-import java.lang
-
-import smathla.core.algebra.structures.impl.integer
-import smathla.core.algebra.structures.{RingElem}
 import integer.Integer
+import smathla.core.algebra.structures.ring.RingElem
 
 case class Polynomial[E <: RingElem[E]] private(val map: Map[Integer, E]) extends RingElem[Polynomial[E]] {
 

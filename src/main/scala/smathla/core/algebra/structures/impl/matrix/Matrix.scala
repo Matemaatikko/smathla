@@ -1,148 +1,140 @@
 package smathla.core.algebra.structures.impl.matrix
 
-import smathla.core.algebra.structures.RingElem
+import shapeless.{AdditiveCollection, Sized, Nat}
+import smathla.core.algebra.structures.impl.vector
+import smathla.core.algebra.structures.ring.RingElem
 
-import scala.reflect.runtime.universe._
+//TODO untested
+class Matrix[N <: Nat, M <: Nat, R <: RingElem[R]](val rows: Sized[Seq[vector.Vector[M, R]], N]){
 
+  implicit def additiveCollection[T] = new AdditiveCollection[Seq[T]] {}
+  private val unsized = rows.unsized
 
-sealed trait NumType
-class `1` extends NumType
-class `2` extends NumType
-class `3` extends NumType
-class `4` extends NumType
-class `5` extends NumType
-class `6` extends NumType
-class `7` extends NumType
-class `8` extends NumType
-class `9` extends NumType
-class `10` extends NumType
-class `11` extends NumType
-class `12` extends NumType
-class `13` extends NumType
-class `14` extends NumType
-class `15` extends NumType
-class `16` extends NumType
-class `17` extends NumType
-class `18` extends NumType
-class `19` extends NumType
-class `20` extends NumType
-class `21` extends NumType
-class `22` extends NumType
-class `23` extends NumType
-class `24` extends NumType
-class `25` extends NumType
-class `26` extends NumType
-class `27` extends NumType
-class `28` extends NumType
-class `29` extends NumType
-class `30` extends NumType
-class `31` extends NumType
-class `32` extends NumType
-class `33` extends NumType
-class `34` extends NumType
-class `35` extends NumType
+  val columnCount = unsized.head.size
+  val rowCount = unsized.size
 
+  private[matrix] def get(i: Int, j: Int) = unsized(i).vec(j)
 
-/**
- * TODO untested
- */
-class MatrixLike[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](val elements: Seq[R]){
+  def apply(i: Int, j: Int): Option[R] = unsized(i)(j)
 
-  val rowCount = typeOf[N].typeSymbol.toString.substring(6).toInt
-  val columnCount = typeOf[M].typeSymbol.toString.substring(6).toInt
-  if(elements.length != rowCount*columnCount) throw new Exception(s"Invalid size of array: ${rowCount*columnCount} != ${elements.length}")
-
-  def apply(i: Int, j: Int): R = elements(columnCount*i + j)
-
-  def *[K <: NumType: TypeTag](matrix: MatrixLike[M, K, R]): MatrixLike[N, K, R] = {
-    val list = for(
-      n <- 0 until rowCount;
-      k <- 0 until matrix.columnCount
-    ) yield (1 until columnCount).foldLeft(this(n, 0)*matrix(0, k))((sum, ind) => sum + this(n, ind)*matrix(ind, k))
-    new MatrixLike[N, K, R](list)
+  /**
+    * Multiply this matrix with given matrix.
+    * Matrix multiplication is defined as following:
+    * c_i_j = sum_{j = 0 until k} a_n_j*b_j_k
+    */
+  def *[K <: Nat](matrix: Matrix[M, K, R]): Matrix[N, K, R] = {
+    new  Matrix[N, K, R](
+      Sized.wrap(
+        (0 until rowCount).map(
+          rowNum => {
+            new vector.Vector[K, R](
+              Sized.wrap(
+                (0 until matrix.columnCount).map(
+                  columnNum => {
+                    def value(i: Int) = get(rowNum, i)*matrix.get(i, columnNum)
+                    (1 until columnCount).foldLeft(value(0))((sum, ind) => sum + value(ind))
+                  }
+                )
+              )
+            )
+          }
+        )
+      )
+    )
   }
 
-  def +(matrix: MatrixLike[N, M, R]): MatrixLike[N, M, R] =
-    new MatrixLike[N, M, R](for(i <- 0 until elements.size) yield elements(i) + matrix.elements(i))
+  /**
+    * Add given matrix to this matrix.
+    * c_i_j = a_i_j + b_i_j
+    */
+  def +(matrix: Matrix[N, M, R]): Matrix[N, M, R] = {
+    new  Matrix[N, M, R](
+      Sized.wrap(
+        (0 until rowCount).map(ind => rows.unsized(ind) + matrix.rows.unsized(ind))
+      )
+    )
+  }
 
-  def *(r: R): MatrixLike[N, M, R] =
-    new MatrixLike[N, M, R](for(i <- 0 until elements.size) yield elements(i)*r)
+  def transpose: Matrix[M, N, R] = {
+    new Matrix[M, N, R](
+      Sized.wrap(
+        (0 until columnCount).map(
+          columnNum => {
+            new vector.Vector[N, R](
+              Sized.wrap(
+                (0 until rowCount).map(
+                  rowNum => {
+                    get(columnNum, rowNum)
+                  }
+                )
+              )
+            )
+          }
+        )
+      )
+    )
+  }
 
-  def transpose: MatrixLike[N, M, R] =
-    new MatrixLike[N, M, R](for(index <- 0 until elements.size) yield this(index%rowCount, index/rowCount))
+  def *(scalar: R): Matrix[N, M, R] = {
+    new Matrix[N, M, R](
+      Sized.wrap(
+        unsized.map(_*scalar)
+      )
+    )
+  }
 
   override def toString(): String = {
-    (0 until rowCount).foldLeft("[")((str, n) => str + (1 until columnCount).foldLeft("["+this(n, 0))((str, m) => str + ", "+this(n, m)) + "]") + "]"
+    unsized.foldLeft("[")((str, vector) => str + vector.toString) + "]"
   }
 
-  override def equals(any: Any): Boolean = any match {
-    case a: MatrixLike[N, M, R] => a.elements == elements
-    case _ => false
+  override def equals(any: Any) = any match {
+    case a: Matrix[N, M, R] => this.unsized.equals(a.unsized)
+    case _                           => false
   }
-
-  //MAPPING
-
-  def map[B <: RingElem[B]](f: (Int, Int, R) => B): MatrixLike[N, M, B] =
-    new MatrixLike[N, M, B](
-      for(
-        i <- 0 until columnCount;
-        j <- 0 until rowCount
-      ) yield(f(i, j, this(i, j)))
-    )
-
-
-  def forall(f: R => Boolean): Boolean = elements.forall(f)
-
-  //ROW OPERATIONS:
-
-  /**
-   * Swaps to rows.
-   * There are some pre requirements:
-   * 0 <= row1 < rowCount
-   * 0 <= row2 < rowCount
-   */
-  def swap(row1: Int, row2: Int): MatrixLike[N, M, R] =
-    new MatrixLike[N, M, R](
-      for(index <- 0 until elements.length)
-        yield(
-          if(index/columnCount == row1) elements(row2*columnCount + index%columnCount)
-          else if(index/columnCount == row2) elements(row1*columnCount + index%columnCount)
-          else elements(index)
-          )
-    )
-
-  /**
-   * Multiplies all elements of given row with given element.
-   * There are some pre requirements:
-   * 0 <= row < rowCount
-   */
-  def mul(row: Int, value: R) = map((i, _, r) => if(i == row) r*value else r)
-
-  /**
-   * Adds first row to another.
-   * There are some pre requirements:
-   * 0 <= row < rowCount
-   * 0 <= to < rowCount
-   */
-  def sum(row: Int, to: Int): MatrixLike[N, M, R] =
-    new MatrixLike[N, M, R](
-      for(index <- 0 until elements.length)
-        yield(
-          if(index/columnCount == to) elements(index) + elements(row*columnCount + index%columnCount)
-          else elements(index)
-          )
-    )
-
 }
 
 object Matrix{
-
-  //TODO tools for matrixes
-
-  def fill[N <: NumType: TypeTag, M <: NumType: TypeTag, R <: RingElem[R]](r: R): MatrixLike[N, M, R] = {
-    val rowCount = typeOf[N].typeSymbol.toString.substring(6).toInt
-    val columnCount = typeOf[M].typeSymbol.toString.substring(6).toInt
-    val size = rowCount*columnCount
-    new MatrixLike[N, M, R](Seq.fill(size)(r))
-  }
+  implicit def matrixOps[N <: Nat, M <: Nat, R <: RingElem[R]](matrix: Matrix[N, M, R]) = new ShapelessMatrixOps[N, M, R](matrix)
 }
+
+
+class ShapelessMatrixOps[N <: Nat, M <: Nat, R <: RingElem[R]](private val matrix: Matrix[N, M, R]){
+
+  implicit def additiveCollection[T] = new AdditiveCollection[Seq[T]] {}
+
+  def map[R2 <: RingElem[R2]](function: (Int, Int) => R2) = {
+    new  Matrix[N, M, R2](
+      Sized.wrap(
+        (0 until matrix.rowCount).map(
+          rowNum => {
+            new vector.Vector[M, R2](
+              Sized.wrap(
+                (0 until matrix.columnCount).map(
+                  columnNum => {
+                    function(rowNum, columnNum)
+                  }
+                )
+              )
+            )
+          }
+        )
+      )
+    )
+  }
+
+  def map[R2 <: RingElem[R2]](function: R => R2) = {
+    new  Matrix[N, M, R2](
+      Sized.wrap(matrix.rows.unsized.map(elem => elem.map(function(_))))
+    )
+  }
+
+  def forall(function: R => Boolean): Boolean = matrix.rows.forall(_.forall(function))
+
+  def forall(function: (Int, Int, R) => Boolean): Boolean =
+    (0 until matrix.rowCount).forall(
+      rowNum => (0 until matrix.columnCount).forall(
+        columnNum => function(rowNum, columnNum, matrix.get(rowNum, columnNum))
+      )
+    )
+}
+

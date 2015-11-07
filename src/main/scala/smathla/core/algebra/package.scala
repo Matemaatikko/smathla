@@ -1,7 +1,7 @@
 package smathla
 
-import smathla.core.algebra.structures.EuclideanElem
 import smathla.core.algebra.structures.impl.integer.IntegerLike
+import smathla.core.algebra.structures.ring.EuclideanElem
 
 package object algebra {
 

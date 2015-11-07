@@ -1,7 +1,7 @@
 package smathla.core.algebra.structures.impl.quaternion
 
 import smathla.calculus
-import smathla.core.algebra.structures.{DivisionRingElem}
+import smathla.core.algebra.structures.field.DivisionRingElem
 import smathla.core.algebra.structures.impl.real.{RealLike}
 
 //TODO all untested

@@ -1,8 +1,7 @@
-package smathla.core.algebra.structures
+package smathla.core.algebra.structures.group
 
 /**
- * This class identifies element of algebraic structure that is called monoid.
- * Monoid S has following properties:
+ * Monoid S is Semigroup with following additional properties properties:
  * 1) It is closed under binary operation (In this case operation is: +)
  * 2) Binary operation is associative: For all a,b,c in S: (a + b) + c = a + (b + c)
  * 3) It has neutral element: e. For all a in S: a + e = e + a = a

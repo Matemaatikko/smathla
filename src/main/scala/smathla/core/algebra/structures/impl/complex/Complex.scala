@@ -1,10 +1,9 @@
 package smathla.core.algebra.structures.impl.complex
 
 import Math.Geometry.Point2D
-import smathla.core.Types
-import Types._
+import smathla.core._
+import smathla.core.algebra.structures.field.{DivisionRingElem, DivisionRing}
 import smathla.core.algebra.structures.impl.real.{Real64, RealLike, Real}
-import smathla.core.algebra.structures.{DivisionRing, DivisionRingElem}
 import smathla.calculus
 
 import scala.reflect.ClassTag

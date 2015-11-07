@@ -1,7 +1,6 @@
-package smathla.core.algebra.structures
+package smathla.core.algebra.structures.ring
 
-import smathla.core.Types
-import Types._
+import smathla.core.algebra.structures.group.{Abelian, AbelianElem}
 
 /**
  * This class identifies element of algebraic structure that is called Ring.
