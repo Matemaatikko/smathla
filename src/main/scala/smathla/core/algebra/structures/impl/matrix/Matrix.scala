@@ -94,11 +94,11 @@ class Matrix[N <: Nat, M <: Nat, R <: RingElem[R]](val rows: Sized[Seq[vector.Ve
 }
 
 object Matrix{
-  implicit def matrixOps[N <: Nat, M <: Nat, R <: RingElem[R]](matrix: Matrix[N, M, R]) = new ShapelessMatrixOps[N, M, R](matrix)
+  implicit def matrixOps[N <: Nat, M <: Nat, R <: RingElem[R]](matrix: Matrix[N, M, R]) = new MatrixOps[N, M, R](matrix)
 }
 
 
-class ShapelessMatrixOps[N <: Nat, M <: Nat, R <: RingElem[R]](private val matrix: Matrix[N, M, R]){
+class MatrixOps[N <: Nat, M <: Nat, R <: RingElem[R]](private val matrix: Matrix[N, M, R]){
 
   implicit def additiveCollection[T] = new AdditiveCollection[Seq[T]] {}
 
