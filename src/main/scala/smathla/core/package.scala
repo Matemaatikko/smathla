@@ -30,7 +30,7 @@ package object core {
   type `20` = Nat._20
   type `21` = Nat._21
   type `22` = Nat._22
-  type `23` = Succ[Nat._22]
+  type `23` = Succ[`22`]
   type `24` = Succ[`23`]
   type `25` = Succ[`24`]
 
